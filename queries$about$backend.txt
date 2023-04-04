@@ -1,0 +1,65 @@
+What is Node Js?
+Node.js is a JavaScript runtime environment that allows you to run JavaScript on the server side.it's a platform that lets you write server-side applications in JavaScript.
+
+What is express js?
+a popular open-source web application framework for Node.js.It provides a set of features and tools for building web applications and APIs quickly and easily.Express.js makes it easy to define routes, handle HTTP requests and responses, and process data from forms and queries
+
+express(): This is the main function that creates an Express.js application. It returns an instance of the express object.
+
+app.listen(port, [hostname], [backlog], [callback]): This method starts a server and listens on the specified port and hostname. The backlog parameter is optional and specifies the maximum number of queued connections. The callback parameter is also optional and is called when the server starts listening.
+
+app.get(path, [callback]): This method defines a route for the GET HTTP method. The path parameter is the route path, and the callback parameter is a function that is called when the route is accessed with a GET request.
+
+app.post(path, [callback]): This method defines a route for the POST HTTP method. The path parameter is the route path, and the callback parameter is a function that is called when the route is accessed with a POST request.
+
+app.put(path, [callback]): This method defines a route for the PUT HTTP method. The path parameter is the route path, and the callback parameter is a function that is called when the route is accessed with a PUT request.
+
+app.delete(path, [callback]): This method defines a route for the DELETE HTTP method. The path parameter is the route path, and the callback parameter is a function that is called when the route is accessed with a DELETE request.
+
+app.use([path], [callback]): This method adds middleware functions to the application's request processing chain. The path parameter is optional and specifies the route path for which the middleware should be used. The callback parameter is a function that is called for each request that matches the specified path.
+
+3. What is MongoDB?
+Unlike traditional relational databases, which store data in tables with fixed schemas, MongoDB stores data in flexible documents with dynamic schemas.In MongoDB, data is stored as collections of JSON-like documents. Each document can have its own unique structure and can contain a variety of data types
+
+4. What is a schema?
+a schema is a way of organizing and defining the structure of a database.It specifies how data is stored and organized, including the types of fields, their data types, and any constraints or relationships between them.
+
+In the context of MongoDB, a schema can be thought of as a blueprint for how documents in a collection should be structured.
+
+-> Static Schema
+A static schema is a schema that defines a fixed set of fields and their data types for each document in a collection. Once a document is created, its structure cannot be changed unless the schema is modified. Here's an example of a static schema in MongoDB:
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const BookSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: String,
+    required: true
+  },
+  publishedDate: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Book = mongoose.model('Book', BookSchema);
+
+-> Dynamic Schema
+A dynamic schema, on the other hand, is a schema that allows for more flexibility in the structure of documents
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const PersonSchema = new Schema({});
+
+const Person = mongoose.model('Person', PersonSchema);
+
+5. What is a middleware?
+In the context of an Express.js application, middleware is a function that receives the HTTP request object (req), the HTTP response object (res), and a next function as arguments. It can perform some kind of processing on the request or response objects, and then either pass control to the next middleware function in the chain (by calling next()) or send a response back to the client.
+
+Middleware functions can be used for a variety of purposes, such as logging, authentication, authorization, validation, error handling, and more. They can be defined globally for the entire application, or locally for specific routes or endpoints.

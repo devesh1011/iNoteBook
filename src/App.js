@@ -9,7 +9,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 
 export default function App() {
-	const [alert, setAlert] = useState("Your Message");
+	const [alert, setAlert] = useState(null);
 
 	const showAlert = (message, type) => {
         setAlert(
@@ -34,7 +34,7 @@ export default function App() {
 					<div className="container">
 						<Routes>
 							<Route exact path='/' element={
-								<Home />
+								<Home showAlert={showAlert}/>
 							}></Route>
 
 							<Route exact path='/about' element={
@@ -42,11 +42,11 @@ export default function App() {
 							}></Route>
 
 							<Route exact path='/login' element={
-								<Login />
+								<Login showAlert={showAlert}/>
 							}></Route>
 
-							<Route exact path='/singup' element={
-								< SignUp />
+							<Route exact path='/signup' element={
+								< SignUp showAlert={showAlert}/>
 							}></Route>
 						</Routes>
 					</div>

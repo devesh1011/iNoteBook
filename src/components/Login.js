@@ -1,39 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
+    const [credentials, setCredentials] = useState({ email: "", password: "" });
+    let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:5000/api/auth/login')
-
-        const response = await fetch(`http://localhost:5000/api/auth/login`, {
-            method: "PUT",
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
 
         const json = await response.json();
-        console.log(json)
+
+        if (json.success) {
+            // redirect
+            localStorage.setItem('token', json.authToken)
+            props.showAlert("You are successfully Logged In", "success")
+
+            navigate("/")
+        } else {
+            props.showAlert("Invalid Credentials", "danger")
+        }
+    }
+
+    const onchange = (e) => {
+        setCredentials({
+            ...credentials, [e.target.name]: e.target.value
+        })
     }
 
     return (
-        <div className="container login-form">
-            <h1 className='text-center'>Login Form</h1>
-            <form>
-                <div class="mb-3">
-                    <label htmlFor="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" />
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <form onSubmit={handleSubmit}>
+                        <h1 class="text-center mb-4">Sign in to your account</h1>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required onChange={onchange} name='email' value={credentials.email}/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required onChange={onchange} name='password' value={credentials.password}/>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <button type="submit" class="btn btn-dark btn-block">Sign-In</button>
+                            <Link to="#" class="float-end">Forgot password?</Link>
+                        </div>
+
+                        <p class="text-center mt-3">New to iNoteBook? <Link to="/signup">Create your iNoteBook account</Link></p>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label htmlFor="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" />
-                </div>
-                <button type="submit" class="btn btn-dark" onSubmit={handleSubmit}>Submit</button>
-            </form>
+            </div>
         </div>
+
     )
 }
 

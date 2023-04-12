@@ -11,14 +11,14 @@ const JWT_SECRET = "Deveshk237@123"
 // Route 1:
 // Create a user using post "/api/auth/createUser" : NO Login Required
 router.post('/createUser', [body('name', 'Enter a valid name').isLength({ min: 3 }), body('email', 'Enter a valid email').isEmail(), body('password', 'Password must be atleast 8 characters').isLength({ min: 8, max: 16 })], async (req, res) => {
+    let success = false;
     
-
     // check whether the use  with this email exists already
     try {
         let user = await User.findOne({ email: req.body.email });
 
         if (user) {
-            return res.status(400).json({ error: "Sorry the user with this email alreay exists!" })
+            return res.status(400).json({success, error: "Sorry the user with this email alreay exists!" })
         }
 
         const salt = await bcrpyt.genSalt(10);
@@ -37,7 +37,8 @@ router.post('/createUser', [body('name', 'Enter a valid name').isLength({ min: 3
         }
         const authToken = jwt.sign(data, JWT_SECRET);
 
-        res.json({ authToken });
+        success = true
+        res.json({success, authToken });
     } catch (error) {
         return res.status(500).send("Internal Server Error: Some error occured");
     }
@@ -59,12 +60,14 @@ router.post('/login', [body('email', 'Enter a valid email').isEmail(), body('pas
         let user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({ error: "Try to login with correct credentials" })
+            success = false
+            return res.status(400).json({success, error: "Try to login with correct credentials" })
         }
 
         const passCompare = await bcrpyt.compare(password, user.password);
         if (!passCompare) {
-            return res.status(400).json({ error: "Try to login with correct credentials" })
+            success = false
+            return res.status(400).json({ success, error: "Try to login with correct credentials" })
         }
 
         const payLoad = {
@@ -74,7 +77,9 @@ router.post('/login', [body('email', 'Enter a valid email').isEmail(), body('pas
         }
 
         const authToken = jwt.sign(payLoad, JWT_SECRET);
-        res.json({ authToken });
+
+        success = true;
+        res.json({ success, authToken });
 
     } catch (error) {
         return res.status(500).send("Internal Server Error: Some error occured");

@@ -9,17 +9,19 @@ const Notes = (props) => {
 	const { notes, getNotes, editNote } = context;
 	let navigate = useNavigate();
 	useEffect(() => {
-		
-		if (localStorage.getItem('token')) {			getNotes()
+
+		if (localStorage.getItem('mytoken')) {
+			getNotes()
 		} else {
 			navigate('/login')
 		}
 		// eslint-disable-next-line
 	}, [])
+	console.log("notes:", notes);
 
 	const ref = useRef(null)
 	const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "default" })
-	
+
 	const updateNote = (note) => {
 		ref.current.click();
 
@@ -41,7 +43,7 @@ const Notes = (props) => {
 
 	return (
 		<>
-			<AddNote showAlert={props.showAlert}/>
+			<AddNote showAlert={props.showAlert} />
 			<button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Launch demo modal
 			</button>
@@ -76,12 +78,12 @@ const Notes = (props) => {
 				</div>
 			</div>
 			<h1>See your Notes</h1>
-			{notes.length === 0 && 'No notes to display'}
+			{notes.length === 0 && 'Oops! You have not created notes.'}
 			<div className='row'>
 				{
 					notes.map((note) => {
 						return (
-							<NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
+							<NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
 						)
 					})
 				}

@@ -17,14 +17,14 @@ const NoteItem = (props) => {
 
 	return (
 		<>
-			<div className='col col-lg-4 col-md-6'>
-				<div className="card my-3">
+			<div className='col col-lg-4 col-md-6 col-sm-12'>
+				<div className="card my-3 shadow">
 					<div className="card-body">
 						<h5 className="card-title">{note.title}</h5>
 						<p className="card-text">{note.description}</p>
-						<div className="container">
-							<button className="btn btn-danger mx-2" onClick={handleDelete}>Delete</button>
-							<button className="btn btn-primary mx-2" onClick={() => {
+						<div className="container-fluid">
+							<button className="btn btn-danger me-lg-2 me-md-2" onClick={handleDelete}>Delete</button>
+							<button className="btn btn-primary" onClick={() => {
 								updateNote(note)
 							}}>Edit</button>
 						</div>

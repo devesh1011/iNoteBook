@@ -21,7 +21,7 @@ const Login = (props) => {
 
         if (json.success) {
             // redirect
-            localStorage.setItem('token', json.authToken)
+            localStorage.setItem('mytoken', json.authToken)
             props.showAlert("You are successfully Logged In", "success")
 
             navigate("/")
@@ -37,29 +37,29 @@ const Login = (props) => {
     }
 
     return (
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6">
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-md-8 col-lg-6">
                     <form onSubmit={handleSubmit}>
-                        <h1 class="text-center mb-4">Sign in to your account</h1>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required onChange={onchange} name='email' value={credentials.email}/>
+                        <h1 className="text-center my-4">Sign in to your account</h1>
+                        <div className="mb-3">
+                            <label for="email" className="form-label">Email</label>
+                            <input type="email" className="form-control" id="email" required onChange={onchange} name='email' value={credentials.email} />
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" required onChange={onchange} name='password' value={credentials.password}/>
+                        <div className="mb-3">
+                            <label for="password" className="form-label">Password</label>
+                            <input type="password" className="form-control" id="password" required onChange={onchange} name='password' value={credentials.password} />
                         </div>
-                        <div class="mb-3 form-check">
-                            <button type="submit" class="btn btn-dark btn-block">Sign-In</button>
-                            <Link to="#" class="float-end">Forgot password?</Link>
+                        <div className="mb-3 form-check">
+                            <button type="submit" className="btn btn-dark btn-block">Sign-In</button>
+                            <Link to="#" className="float-end">Forgot password?</Link>
                         </div>
 
-                        <p class="text-center mt-3">New to iNoteBook? <Link to="/signup">Create your iNoteBook account</Link></p>
-                    </form>
-                </div>
-            </div>
+                        <p className="text-center mt-3">New to iNoteBook? <Link to="/signup">Create your iNoteBook account</Link></p>
+            </form>
         </div>
+            </div >
+        </div >
 
     )
 }

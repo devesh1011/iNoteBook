@@ -9,16 +9,20 @@ const NoteState = (props) => {
 
     // Get all notes
     const getNotes = async () => {
-        // API call
+        console.log("authToken", localStorage.getItem("mytoken"));
+        // API call 
         const response = await fetch(`${host}/api/notes/fetchallnotes`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
+                "auth-token": localStorage.getItem('mytoken')
             },
         });
 
+        console.log("Response status:", response.status);
+
         const json = await response.json()
+        console.log("Received data:", json);
 
         setNotes(json)
     }
@@ -30,9 +34,9 @@ const NoteState = (props) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
+                "auth-token": localStorage.getItem('mytoken')
             },
-            body: JSON.stringify({title, description, tag})
+            body: JSON.stringify({ title, description, tag })
         });
 
         const note = await response.json();
@@ -47,9 +51,12 @@ const NoteState = (props) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
+                "auth-token": localStorage.getItem('mytoken')
             },
         });
+
+        const json = await response.json();
+        console.log(json)
 
         const newNotes = notes.filter((note) => {
             return note._id !== id;
@@ -63,12 +70,13 @@ const NoteState = (props) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": localStorage.getItem('token')
+                "auth-token": localStorage.getItem('mytoken')
             },
-            body: JSON.stringify({title, description, tag})
+            body: JSON.stringify({ title, description, tag })
         });
 
-        const json = await response.json();     
+        const json = await response.json();
+        console.log(json)
 
         const newNote = notes.filter((note) => {
             if (note._id === id) {
@@ -78,7 +86,7 @@ const NoteState = (props) => {
             }
 
             return note;
-        })  
+        })
         setNotes(newNote);
         getNotes();
     }
